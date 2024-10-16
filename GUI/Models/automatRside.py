@@ -8,7 +8,6 @@ class automatRside:
         if "A" in side:
             rules_applid, result=basic_rules(side,True)
             if "R001" in rules_applid and "R003" in rules_applid and "R005" in rules_applid:
-                # le dio prioridad a la regla R001 ya que es la que no pone en peligro a ninguno de los items
                 self.Rside.append(side.pop(side.index("A")))
                 self.Rside.append(side.pop(side.index("B")))
             elif "R005" in rules_applid and "R003" in rules_applid:
@@ -23,4 +22,14 @@ class automatRside:
         else: 
             print("Pipipi")
         return self.Rside, rules_applid
-        
+    
+    def danger(self,side, result):
+        danger_level = 0
+
+        if "A" not in side:
+            if "B" in side and "C" in side:
+                danger_level += 2  
+            if "B" in side and "D" in side:
+                danger_level += 1  
+
+        return danger_level

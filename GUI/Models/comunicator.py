@@ -6,17 +6,26 @@ class comunicator:
     def __init__(self):
         self.right = []
         self.left = []
-        self.initialStatus = ["A", "B", "C", "D"]
+        # only flag to log
         self.rule="start"
+        # Inicial condition
+        self.initialStatusLeft = ["A", "B", "C", "D"]
+        self.initialStatusRight = []
+        # Final condition or Goal
+        self.goalLeft=self.initialStatusRight
+        self.goalRigth=self.initialStatusLeft
 
     
     def start(self):
-        self.left = self.initialStatus
+        self.left = self.initialStatusLeft
+        self.right= self.initialStatusRight
         automatRight = automatRside(self.right)
         automatLeft = automatLside(self.left)
         log=[]#registro de movimietos
         log_logic=[]#registro de logica
-        while self.left:
+
+
+        while not self.goal():
             log.append([self.right.copy(), self.left.copy()])
             log_logic.append(self.rule)
             print(f"Del lado izquierdo se encuentran {self.left}, del lado derecho se encuentra {self.right}, se uso la regla {self.rule}")
@@ -24,7 +33,7 @@ class comunicator:
             log.append([self.right.copy(), self.left.copy()])
             log_logic.append(self.rule)
             print(f"Del lado izquierdo se encuentran {self.left}, del lado derecho se encuentra {self.right}, se uso la regla {self.rule}")
-            if not self.left:
+            if  self.goal():
                 break
             self.left, self.rule = automatLeft.checkstatus(self.right)
 
@@ -33,6 +42,11 @@ class comunicator:
         print(log)
         return log
     
+    def goal(self):
+        if self.goalLeft==self.left and self.goalRigth==self.right:
+            return True
+        else:
+            return False
     def replace_variables(self, array, vars_dict):
         result = []
         for sublist in array:
