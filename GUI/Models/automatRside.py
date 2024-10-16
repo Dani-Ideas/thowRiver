@@ -1,34 +1,26 @@
+from .base_know import basic_rules
+
 class automatRside:
     def __init__(self, Rside):
         self.Rside = Rside
 
     def checkstatus(self, side):
-        if "Granjero" in side:
-            if "Gallina" in side and "Lobo" in side and "Maíz" in side:
-                side.remove("Granjero")
-                side.remove("Gallina")
-                self.Rside.append("Granjero")
-                self.Rside.append("Gallina")
-            elif "Lobo" in side and "Gallina" not in side:
-                side.remove("Granjero")
-                side.remove("Lobo")
-                self.Rside.append("Granjero")
-                self.Rside.append("Lobo")##
-            #elif "Maíz" in side and "Lobo" not in side and "Gallina" not in side:
-            #    side.remove("Granjero")
-            #    side.remove("Maíz")
-            #    self.Rside.append("Granjero")
-            #    self.Rside.append("Maíz")
-            elif "Gallina" in side and "Maíz" in side and "Lobo" not in side:
-                side.remove("Granjero")
-                side.remove("Maíz")
-                self.Rside.append("Granjero")
-                self.Rside.append("Maíz")
-            elif "Gallina" in side and "Maíz" not in side and "Lobo" not in side:
-                side.remove("Granjero")
-                side.remove("Gallina")
-                self.Rside.append("Granjero")
-                self.Rside.append("Gallina")
+        if "A" in side:
+            rules_applid, result=basic_rules(side,True)
+            if "R001" in rules_applid and "R003" in rules_applid and "R005" in rules_applid:
+                # le dio prioridad a la regla R001 ya que es la que no pone en peligro a ninguno de los items
+                self.Rside.append(side.pop(side.index("A")))
+                self.Rside.append(side.pop(side.index("B")))
+            elif "R005" in rules_applid and "R003" in rules_applid:
+                self.Rside.append(side.pop(side.index("A")))
+                self.Rside.append(side.pop(side.index("C")))
+            elif "R005" in rules_applid and "R001" in rules_applid:
+                self.Rside.append(side.pop(side.index("A")))
+                self.Rside.append(side.pop(side.index("D")))
+            elif "R001" in rules_applid:
+                self.Rside.append(side.pop(side.index("A")))
+                self.Rside.append(side.pop(side.index("B")))
         else: 
             print("Pipipi")
-        return self.Rside
+        return self.Rside, rules_applid
+        
