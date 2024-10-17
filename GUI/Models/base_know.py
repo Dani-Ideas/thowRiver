@@ -40,3 +40,10 @@ def basic_rules(facts, direction):
         result.append("A")  # Solo el Granjero cruza
 
     return reglas_aplicadas, result
+
+default_case = {
+    "initialStatusLeft": ["A", "B", "C","D"],
+    "initialStatusRight": [],
+    "goalLeft": [],
+    "goalRight": ["A", "B", "C", "D"]
+}
